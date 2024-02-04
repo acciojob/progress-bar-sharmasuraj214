@@ -1,16 +1,85 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
-	<link rel="stylesheet" href="styles.css">
-</head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .progress-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
+    .circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: lightgray;
+      display: inline-block;
+      position: relative;
+    }
+
+    .circle.active {
+      background-color: green;
+    }
+
+    #prev, #next {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    #prev:disabled, #next:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
 <body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
+
+<div class="progress-bar">
+  <div id="circle-1" class="circle active"></div>
+  <div id="circle-2" class="circle"></div>
+  <div id="circle-3" class="circle"></div>
+  <div id="circle-4" class="circle"></div>
+  <div id="circle-5" class="circle"></div>
+  <button id="prev" onclick="prev()">Previous</button>
+  <button id="next" onclick="next()">Next</button>
+</div>
+
+<script>
+  let currentStep = 1;
+  const totalSteps = 5;
+
+  function updateProgressBar() {
+    for (let i = 1; i <= totalSteps; i++) {
+      const circle = document.getElementById(`circle-${i}`);
+      if (i < currentStep) {
+        circle.classList.add('active');
+      } else {
+        circle.classList.remove('active');
+      }
+    }
+
+    document.getElementById('prev').disabled = currentStep === 1;
+    document.getElementById('next').disabled = currentStep === totalSteps;
+  }
+
+  function next() {
+    if (currentStep < totalSteps) {
+      currentStep++;
+      updateProgressBar();
+    }
+  }
+
+  function prev() {
+    if (currentStep > 1) {
+      currentStep--;
+      updateProgressBar();
+    }
+  }
+
+  updateProgressBar(); // Initial setup
 </script>
 
 </body>
-
 </html>
